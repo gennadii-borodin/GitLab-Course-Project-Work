@@ -7,7 +7,7 @@ import api
 
 if __name__ == '__main__':
     print("Starting up...")
-
+    print("heloo")
     Config()
     Store.migrate_db(Config.config)
 
