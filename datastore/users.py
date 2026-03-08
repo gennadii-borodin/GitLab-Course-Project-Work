@@ -13,14 +13,14 @@ def calculate_password_hash(config, password):
 def create_user(db, config, firstname, lastname, username, password):
     password_hash = calculate_password_hash(config, password)
     cursor = db.execute(
-        'INSERT INTO users(firstname, lastname, created_at, is_admin) values(?, ?, CURRENT_TIMESTAMP, 0);',
+        'INSERT INTO users(firstname, lastname, created_at, is_admin) values(%s, %s, CURRENT_TIMESTAMP, 0) RETURNING id;',
         (firstname, lastname))
     row_count1 = cursor.rowcount
-    user_id = cursor.lastrowid
+    user_id = cursor.fetchone()[0]
 
     if row_count1 > 0:
         row_count2 = db.execute(
-            "INSERT INTO auth_methods(user_id, username, password, type) values(?, ?, ?, 'USERNAME_AND_PASSWORD');",
+            "INSERT INTO auth_methods(user_id, username, password, type) values(%s, %s, %s, 'USERNAME_AND_PASSWORD');",
             (user_id, username, password_hash)).rowcount
 
         if row_count2 > 0:
@@ -32,7 +32,7 @@ def create_user(db, config, firstname, lastname, username, password):
 def check_login(db, config, username, password):
     password_hash = calculate_password_hash(config, password)
     row = db.execute(
-        'SELECT user_id from auth_methods where username=? and password=? and type=\'USERNAME_AND_PASSWORD\'',
+        "SELECT user_id from auth_methods where username=%s and password=%s and type='USERNAME_AND_PASSWORD'",
         (username, password_hash)).fetchone()
     if row:
         return int(row['user_id'])
@@ -48,7 +48,7 @@ def check_admin(db, username):
 
 
 def get_user_by_id(db, user_id):
-    row = db.execute('SELECT * from users where id=?', (user_id,)).fetchone()
+    row = db.execute('SELECT * from users where id=%s', (user_id,)).fetchone()
     if row:
         user = dict(row)
         return user
@@ -61,7 +61,7 @@ def user_by_username(db, username):
 
 
 def user_id_by_username(db, username):
-    row = db.execute("SELECT user_id from auth_methods where username=? and type='USERNAME_AND_PASSWORD'", (username,)).fetchone()
+    row = db.execute("SELECT user_id from auth_methods where username=%s and type='USERNAME_AND_PASSWORD'", (username,)).fetchone()
     if row:
         user_id = int(row["user_id"])
         return user_id

@@ -7,8 +7,8 @@ This application is not very scalable nor data secure and thus should not be use
 The project uses 
 - **ngrok** as a way to publish the service (no actual dependency) (https://ngrok.com/)
 - **bottle** as web server / adapter (http://bottlepy.org/docs/dev/)
-- **sqlite3** as database (https://www.sqlite.org/index.html)
-- **SQLitePlugin** as database access method
+- **PostgreSQL** as database (https://www.postgresql.org/)
+- **psycopg2-binary** as PostgreSQL adapter
 - **vue.js 3** as frontend component framework (https://vuejs.org/)
 - **vue router 4** as SPA router (https://router.vuejs.org/guide/)
 - **bootstrap 5** as frontend styling system (https://getbootstrap.com/)
@@ -41,7 +41,15 @@ First register an Ngrok account and verify your email
 
 ## Configuration
 Using environment variables (while developing edit data/config.py)
-- Set database filename (SPW_DATABASE_FILENAME)
+
+### PostgreSQL settings
+- Set PostgreSQL host (SPW_PG_HOST)
+- Set PostgreSQL port (SPW_PG_PORT)
+- Set PostgreSQL user (SPW_PG_USER)
+- Set PostgreSQL password (SPW_PG_PASSWORD)
+- Set PostgreSQL database name (SPW_PG_DATABASE)
+
+### Other settings
 - Set migrations filename (SPW_MIGRATIONS_FILENAME)
 - Set data directory path (SPW_DATA_DIRECTORY)
 - Set static files directory path (SPW_STATIC_FILES_DIRECTORY)

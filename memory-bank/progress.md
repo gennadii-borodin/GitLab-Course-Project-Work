@@ -7,8 +7,8 @@
 ## Что работает
 
 ### Core Features (100%)
-- ✅ **Веб-сервер**: Bottle с SQLitePlugin
-- ✅ **База данных**: SQLite с миграциями (4 миграции)
+- ✅ **Веб-сервер**: Bottle (без plugin)
+- ✅ **База данных**: PostgreSQL с миграциями (4 миграции)
 - ✅ **Аутентификация**: Регистрация, логин, session management через cookies
 - ✅ **Авторизация**: Ролевая модель (admin/user)
 - ✅ **REST API**: Полный CRUD для things
@@ -78,6 +78,16 @@
 - [x] README.md с инструкциями
 - [x] requirements.txt
 
+### Phase 6: PostgreSQL Migration (✓)
+- [x] Обновлены зависимости (psycopg2-binary вместо bottle-sqlite)
+- [x] Добавлены PG_ параметры в конфигурацию
+- [x] Переписан connection.py для PostgreSQL (psycopg2)
+- [x] Убран bottle_sqlite plugin из main.py
+- [x] Адаптированы SQL запросы (%s placeholders, SERIAL)
+- [x] Переписаны миграции для PostgreSQL синтаксиса
+- [x] Обновлены store.py и users.py для psycopg2
+- [x] Обновлена документация (README, Memory Bank)
+
 ## Известные проблемы (Known Issues)
 
 ### Security Concerns (Educational Justification)
@@ -93,8 +103,8 @@
    - *Риск*: Может остаться пользователь без auth_methods при ошибке
 2. **auth_methods** отдельно от users (но в одной транзакции)
    - *Усложнение*: Логика распределена
-3. **SQLite** - file-based, limited concurrency
-   - *Не подходит*: Для high-traffic приложений
+3. **PostgreSQL** - требует запущенный сервер
+   - *Менее удобно*: Для локальной разработки без Docker
 
 ### Code Quality
 1. **Minimal error handling** - базовый try/except
@@ -115,7 +125,7 @@
 
 ### Code Coverage
 - **Backend**: ~30% (только основные paths)
-- **Frontend**: ~20% (основые сценарии использования)
+- **Frontend**: ~20% (основные сценарии использования)
 - **Tests**: 0% unit tests, есть только data import script
 
 ### Performance
@@ -165,14 +175,15 @@
 ## Версии
 
 ### Текущая версия
-- **v1.0.0** - Initial release (functional prototype)
+- **v2.0.0** - PostgreSQL migration (functional prototype)
 - **Дата**: Март 2026
 - **Статус**: Stable for demo/educational use
 
 ### Зависимости
 - Python 3.8+
-- Bottle (версия из requirements.txt)
-- SQLite3 (stdlib)
+- Bottle 0.12.19
+- PostgreSQL (внешний сервер)
+- psycopg2-binary 2.9.9
 - Vue.js 3.x (CDN или local)
 - Bootstrap 5.x
 - Axios 1.x
@@ -186,8 +197,16 @@
 
 ## Примечания
 
+### Миграция на PostgreSQL (08.03.2026)
+Проект успешно мигрирован с SQLite на PostgreSQL:
+- Заменен драйвер БД: sqlite3 → psycopg2-binary
+- Адаптированы SQL запросы: `?` → `%s`, `AUTOINCREMENT` → `SERIAL`
+- Обновлены миграции для PostgreSQL синтаксиса
+- Убран bottle_sqlite plugin, управление подключениями теперь ручное
+- Обновлена конфигурация: добавлены PG_ параметры
+
 Проект успешно инициализирован и протестирован. Все основные функции работают. Предназначен для образовательных целей и не должен использоваться в production без серьезных доработок в области безопасности и масштабируемости.
 
 **Memory Bank создан**: 08.03.2026
-**Последнее обновление**: 08.03.2026
+**Последнее обновление**: 08.03.2026 (миграция на PostgreSQL)
 **Следующий review**: При добавлении новой функциональности

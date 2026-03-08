@@ -1,6 +1,6 @@
 import os.path
 import json
-from sqlite3 import Error
+from psycopg2 import Error
 from datastore.connection import Connection
 
 
@@ -42,9 +42,9 @@ class Store:
                 sql = migration["sql"]
                 print(sql)
                 c.execute(sql)
-                sql = f'insert into migrations values (\'{migration["version"]}\', \'{migration["comment"]}\', CURRENT_TIMESTAMP);'
+                sql = 'insert into migrations(version, comment, migration_date) values (%s, %s, CURRENT_TIMESTAMP);'
                 print(sql)
-                c.execute(sql)
+                c.execute(sql, (migration["version"], migration["comment"]))
             except Error as err:
                 print(err)
 
@@ -63,11 +63,11 @@ class Store:
                         values = []
                         for k in columns:
                             values.append(item[k])
-                        cols = f'{columns}'[1:-1]
-                        vals = f'{values}'[1:-1].replace("'CURRENT_TIMESTAMP'", "CURRENT_TIMESTAMP")
-                        sql = f'insert into {table}({cols}) values ({vals});'
+                        placeholders = ', '.join(['%s'] * len(columns))
+                        cols = ', '.join(columns)
+                        sql = f'insert into {table}({cols}) values ({placeholders});'
                         print(sql)
-                        c.execute(sql)
+                        c.execute(sql, tuple(values))
                 except Error as err:
                     print(err)
 

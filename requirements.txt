@@ -1,2 +1,2 @@
-bottle==0.12.19
-bottle-sqlite==0.2.0
+соbottle==0.12.19
+psycopg2-binary==2.9.9

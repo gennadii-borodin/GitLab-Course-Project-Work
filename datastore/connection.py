@@ -1,12 +1,11 @@
-import sqlite3
-from sqlite3 import Error
+import psycopg2
+from psycopg2 import Error
 import os
 
 
 class Connection(object):
     def __init__(self, conf):
         self.config = conf
-        self.database_filename = os.path.join(conf.data_directory, conf.db_filename)
         self.db_connection = None
 
     def __enter__(self):
@@ -18,13 +17,21 @@ class Connection(object):
             print(exc_value)
             print(exc_type)
             print(traceback)
-        self.db_connection.commit()
+            self.db_connection.rollback()
+        else:
+            self.db_connection.commit()
         self.db_connection.close()
 
     def create_connection(self):
         conn = None
         try:
-            conn = sqlite3.connect(self.database_filename)
+            conn = psycopg2.connect(
+                host=self.config.pg_host,
+                port=self.config.pg_port,
+                user=self.config.pg_user,
+                password=self.config.pg_password,
+                database=self.config.pg_database
+            )
             return conn
         except Error as e:
             print(e)

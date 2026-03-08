@@ -10,16 +10,18 @@
   - Plugin system для расширений
 
 ### Database
-- **SQLite3** (stdlib) - встроенная реляционная БД
-  - Файловая БД (test1.db)
+- **PostgreSQL** - мощная реляционная СУБД
+  - Клиент-серверная архитектура
   - ACID-совместимость
-  - Подходит для prototyping и low-traffic приложений
+  - Поддерживает сложные запросы, индексы, триггеры
+  - Масштабируемость для production-использования
 
 ### Database Access
-- **bottle_sqlite** - Bottle plugin для SQLite
-  - Автоматическое подключение к БД
-  - Инъекция `db` объекта в хендлеры
-  - Управление транзакциями
+- **psycopg2-binary** - PostgreSQL адаптер для Python
+  - Прямой доступ к PostgreSQL из Python
+  - Поддержка параметризованных запросов (%s placeholders)
+  - Управление транзакциями через контекстные менеджеры
+  - Автоматическое преобразование типов данных
 
 ### Configuration
 - **os.getenv()** - чтение переменных окружения
@@ -73,12 +75,10 @@
 - Python venv для изоляции зависимостей
 
 ### Dependencies (requirements.txt)
-Потенциальные зависимости:
 ```
-bottle
-bottle-sqlite
+bottle==0.12.19
+psycopg2-binary==2.9.9
 ```
-ИЛИ все зависимости могут быть inline если используется встроенный модуль sqlite3.
 
 ### No Build Step
 Проект не требует сборки фронтенда:
@@ -89,8 +89,18 @@ bottle-sqlite
 ## Конфигурация
 
 ### Environment Variables
+
+#### PostgreSQL settings
 ```
-SPW_DATABASE_FILENAME     # Имя файла БД
+SPW_PG_HOST               # Хост PostgreSQL (localhost)
+SPW_PG_PORT               # Порт PostgreSQL (5432)
+SPW_PG_USER               # Пользователь PostgreSQL (postgres)
+SPW_PG_PASSWORD           # Пароль PostgreSQL (password)
+SPW_PG_DATABASE           # Имя базы данных (simple_website)
+```
+
+#### Other settings
+```
 SPW_MIGRATIONS_FILENAME   # Имя файла миграций
 SPW_DATA_DIRECTORY        # Путь к data/ (абсолютный)
 SPW_STATIC_FILES_DIRECTORY # Путь к static/ (абсолютный)
@@ -137,9 +147,9 @@ python3 main.py
 - Нет встроенной админки
 
 ### Database
-- SQLite: одна запись на запись (no concurrent writes)
-- Нет user/password аутентификации БД
-- Ограниченный размер (обычно 2GB)
+- Требует запущенный PostgreSQL сервер
+- Нужна настройка пользователей и прав доступа
+- Менее удобна для локальной разработки без Docker
 
 ### Frontend
 - Нет hot module replacement (HMR)
@@ -155,7 +165,7 @@ python3 main.py
 
 ### Architecture
 - Добавить полноценный ORM (SQLAlchemy)
-- Мigarations через Alembic/Aerich
+- Миграции через Alembic/Aerich
 - Microservices: разделить auth, userdata, things
 
 ### Frontend

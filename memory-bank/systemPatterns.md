@@ -14,7 +14,7 @@
 │ Business Layer  │ ← Логика работы с данными
 │  (Services)     │    - datastore/*.py модули
 ├─────────────────┤
-│   Data Layer    │ ← SQLite база данных
+│   Data Layer    │ ← PostgreSQL база данных
 │  (Models)       │    - Database tables
 └─────────────────┘
 ```
@@ -28,7 +28,7 @@
 
 ### 2. Repository / Data Access Layer
 Модули в `datastore/` инкапсулируют доступ к данным:
-- `connection.py` - управление подключениями к SQLite
+- `connection.py` - управление подключениями к PostgreSQL (psycopg2)
 - `store.py` - общие операции (миграции, импорт данных)
 - `users.py`, `things.py` - бизнес-логика для конкретных доменов
 
@@ -38,10 +38,11 @@
 - Чтение из переменных окружения с fallback на значения по умолчанию
 - Централизованное управление настройками
 
-### 4. Plugin Architecture (Bottle)
-Использование `bottle_sqlite.SQLitePlugin`:
-- Автоматическое подключение БД к каждому хендлеру
-- Инъекция `db` параметра в функции-обработчики
+### 4. Manual Connection Management
+Убран Bottle plugin в пользу ручного управления подключениями:
+- Каждый хендлер получает `db` через контекстный менеджер `Connection`
+- Более явный контроль над транзакциями
+- Независимость от Bottle plugin system
 
 ### 5. Cookie-based Authentication
 Аутентификационная система:
@@ -65,17 +66,17 @@
 
 ## Структура данных
 
-### База данных (SQLite)
+### База данных (PostgreSQL)
 4 основные таблицы:
-1. **users** - пользователи (id, firstname, lastname, is_admin, created_at)
-2. **auth_methods** - методы аутентификации (user_id, username, password, type)
-3. **things** - пользовательские данные (id, name)
-4. **migrations** - история миграций (version, comment, migration_date)
+1. **users** - пользователи (id SERIAL PRIMARY KEY, firstname, lastname, is_admin BOOLEAN, created_at TIMESTAMP)
+2. **auth_methods** - методы аутентификации (user_id INTEGER REFERENCES users(id), username VARCHAR UNIQUE, password TEXT, type VARCHAR)
+3. **things** - пользовательские данные (id SERIAL PRIMARY KEY, name VARCHAR UNIQUE)
+4. **migrations** - история миграций (version INTEGER PRIMARY KEY, comment TEXT, migration_date TIMESTAMP)
 
 ## Компоненты системы
 
 ### Backend (Python/Bottle)
-- **main.py**: точка входа, инициализация плагинов, запуск сервера
+- **main.py**: точка входа, запуск сервера (без плагинов)
 - **api/login.py**: регистрация и аутентификация
 - **api/user.py**: управление пользователями (админка)
 - **api/things.py**: управление вещами (CRUD)
