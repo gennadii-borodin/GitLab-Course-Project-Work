@@ -1,0 +1,30 @@
+2026-03-08 21:52:34 - __main__ - INFO - Starting up application...
+2026-03-08 21:52:34 - __main__ - INFO - Configuration: PG_HOST=postgres, PG_PORT=5432, PG_DATABASE=simple_website
+2026-03-08 21:52:34 - datastore.store - DEBUG - Checking database schema version
+2026-03-08 21:52:34 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 21:52:35 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 21:52:35 - datastore.store - DEBUG - Executing SQL: select max(version) from migrations;
+2026-03-08 21:52:35 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 21:52:35 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 21:52:35 - datastore.store - INFO - Current database schema version: 4
+2026-03-08 21:52:35 - __main__ - INFO - Starting Bottle server on 80 port
+2026-03-08 22:01:21 - __main__ - INFO - Starting up application...
+2026-03-08 22:01:21 - __main__ - INFO - Configuration: PG_HOST=postgres, PG_PORT=5432, PG_DATABASE=simple_website
+2026-03-08 22:01:21 - datastore.store - DEBUG - Checking database schema version
+2026-03-08 22:01:21 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 22:01:21 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 22:01:21 - datastore.store - DEBUG - Executing SQL: select max(version) from migrations;
+2026-03-08 22:01:21 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 22:01:21 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 22:01:21 - datastore.store - INFO - Current database schema version: 4
+2026-03-08 22:01:21 - __main__ - INFO - Starting Bottle server on 80 port
+2026-03-08 22:07:11 - __main__ - INFO - Starting up application...
+2026-03-08 22:07:11 - __main__ - INFO - Configuration: PG_HOST=postgres, PG_PORT=5432, PG_DATABASE=simple_website
+2026-03-08 22:07:11 - datastore.store - DEBUG - Checking database schema version
+2026-03-08 22:07:11 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 22:07:11 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 22:07:11 - datastore.store - DEBUG - Executing SQL: select max(version) from migrations;
+2026-03-08 22:07:12 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 22:07:12 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 22:07:12 - datastore.store - INFO - Current database schema version: 4
+2026-03-08 22:07:12 - __main__ - INFO - Starting Bottle server on 80 port

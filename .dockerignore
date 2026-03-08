@@ -14,3 +14,4 @@ venv/
 test/
 memory-bank/
 README.md
+*.log

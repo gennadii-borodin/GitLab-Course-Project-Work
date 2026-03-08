@@ -58,6 +58,10 @@ Using environment variables (while developing edit data/config.py)
 - Set http port for the service (SPW_PORT)
 - Set session length / cookie TTL (SPW_SESSION_TTL)
 
+### Logging settings
+- Set log level (SPW_LOG_LEVEL): DEBUG, INFO, WARNING, ERROR, CRITICAL (default: INFO)
+- Set log file path (SPW_LOG_FILE): absolute path to log file (default: /app/logs/app.log)
+
 Note: If environment variables are set, they override any / all default values
 
 ## Running the application
@@ -107,11 +111,16 @@ Prerequisites: Docker and Docker Compose installed.
     $ docker-compose down
 
 Note: To persist PostgreSQL data, a Docker volume `postgres_data` is used.
+Note: To persist application logs, a Docker volume mount `./logs:/app/logs` is configured.
 
 To view logs:
 
     $ docker-compose logs -f web
     $ docker-compose logs -f postgres
+
+Or check the log file directly (persisted in ./logs directory):
+
+    $ tail -f logs/app.log
 
 ## Defaults
 ### Default admin credentials

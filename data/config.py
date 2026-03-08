@@ -15,6 +15,8 @@ class Config:
     ENV_STATIC_FILES_DIRECTORY = 'SPW_STATIC_FILES_DIRECTORY'
     ENV_COOKIE_SECRET = 'SPW_COOKIE_SECRET'
     ENV_PASSWORD_SECRET = 'SPW_PASSWORD_SECRET'
+    ENV_LOG_LEVEL = 'SPW_LOG_LEVEL'
+    ENV_LOG_FILE = 'SPW_LOG_FILE'
     ENV_PORT = 'SPW_PORT'
     ENV_SESSION_TTL = 'SPW_SESSION_TTL'
 
@@ -29,6 +31,8 @@ class Config:
         SPW_STATIC_FILES_DIRECTORY='static',        # should be an absolute path
         SPW_COOKIE_SECRET='some-secret-value',
         SPW_PASSWORD_SECRET='some-other-secret-value',
+        SPW_LOG_LEVEL='DEBUG',
+        SPW_LOG_FILE='/app/logs/app.log',
         SPW_PORT=9999,
         SPW_SESSION_TTL=10
     )
@@ -44,6 +48,8 @@ class Config:
                  static_files_directory=None,
                  cookie_secret=None,
                  password_secret=None,
+                 log_level=None,
+                 log_file=None,
                  port=None,
                  session_ttl=None):
         self.pg_host = pg_host or os.getenv(Config.ENV_PG_HOST) or Config.defaults[Config.ENV_PG_HOST]
@@ -56,6 +62,8 @@ class Config:
         self.static_files_directory = static_files_directory or os.getenv(Config.ENV_STATIC_FILES_DIRECTORY) or Config.defaults[Config.ENV_STATIC_FILES_DIRECTORY]
         self.cookie_secret = cookie_secret or os.getenv(Config.ENV_COOKIE_SECRET) or Config.defaults[Config.ENV_COOKIE_SECRET]
         self.password_secret = password_secret or os.getenv(Config.ENV_PASSWORD_SECRET) or Config.defaults[Config.ENV_PASSWORD_SECRET]
+        self.log_level = log_level or os.getenv(Config.ENV_LOG_LEVEL) or Config.defaults[Config.ENV_LOG_LEVEL]
+        self.log_file = log_file or os.getenv(Config.ENV_LOG_FILE) or Config.defaults[Config.ENV_LOG_FILE]
         self.port = port or os.getenv(Config.ENV_PORT) or Config.defaults[Config.ENV_PORT]
         self.session_ttl = session_ttl or os.getenv(Config.ENV_SESSION_TTL) or Config.defaults[Config.ENV_SESSION_TTL]
         Config.config = self

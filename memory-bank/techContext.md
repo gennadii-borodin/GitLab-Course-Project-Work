@@ -33,7 +33,33 @@
   - Импорт тестовых данных
   - Модульные тесты datastore
 
+### Logging
+- **Python logging module** - централизованное логирование
+  - Structured text-based формат с меткой времени, именем модуля, уровнем и сообщением
+  - Динамическое получение логгера через get_logger(name)
+  - Интеграция с системой конфигурации (Config class)
+  - Уровни логирования: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  - Персистентность логов через файловый handler
+  - Docker volume mount для хранения логов вне контейнера
+
 ## Frontend (JavaScript)
+</task_progress>
+- [x] Create директория utils
+- [x] Создать utils/logger.py модуль логирования
+- [x] Обновить data/config.py (добавить LOG_LEVEL, LOG_FILE)
+- [x] Обновить main.py (инициализировать logger)
+- [x] Добавить логирование в api/login.py
+- [x] Добавить логирование в api/user.py
+- [x] Добавить логирование в api/things.py
+- [x] Добавить логирование в datastore/connection.py
+- [x] Добавить логирование в datastore/store.py
+- [x] Добавить логирование в datastore/users.py
+- [x] Обновить Dockerfile (создать /app/logs)
+- [x] Обновить docker-compose.yml (volume для логов)
+- [x] Обновить .dockerignore (добавить *.log)
+- [x] Обновить README.md (секция Logging)
+- [x] Обновить memory-bank/techContext.md (добавить Logging)
+- [ ] Обновить memory-bank/progress.md (добавить Phase 8 Logging Infrastructure)
 
 ### Core Framework
 - **Vue.js 3** (vuejs.org) - реактивный фреймворк

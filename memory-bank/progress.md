@@ -98,7 +98,44 @@
 - [x] Настроен healthcheck для PostgreSQL и web сервиса
 - [x] Настроено автоматическое подключение web к postgres (depends_on with condition)
 
+### Phase 8: Logging Infrastructure (✓)
+- [x] Создан utils/logger.py модуль с setup_logger и get_logger
+- [x] Обновлена data/config.py (добавлены LOG_LEVEL, LOG_FILE)
+- [x] Добавлена инициализация logger в main.py
+- [x] Добавлено логирование во все API эндпоинты:
+  - [x] api/login.py - аутентификационные события
+  - [x] api/user.py - операции с пользователями
+  - [x] api/things.py - CRUD операции
+- [x] Добавлено логирование в datastore:
+  - [x] datastore/connection.py - lifecycle подключений
+  - [x] datastore/store.py - миграции и импорт
+  - [x] datastore/users.py - операции с пользователями
+- [x] Обновлен Dockerfile (создание /app/logs директории)
+- [x] Обновлен docker-compose.yml (volume mount ./logs:/app/logs)
+- [x] Обновлен .dockerignore (добавлено *.log)
+- [x] Обновлен README.md (документация по логированию)
+- [x] Обновлен memory-bank/techContext.md (описание Logging)
+- [x] Настроен file handler для персистентности логов
+
 ## Известные проблемы (Known Issues)
+</task_progress>
+- [x] Create директория utils
+- [x] Создать utils/logger.py модуль логирования
+- [x] Обновить data/config.py (добавить LOG_LEVEL, LOG_FILE)
+- [x] Обновить main.py (инициализировать logger)
+- [x] Добавить логирование в api/login.py
+- [x] Добавить логирование в api/user.py
+- [x] Добавить логирование в api/things.py
+- [x] Добавить логирование в datastore/connection.py
+- [x] Добавить логирование в datastore/store.py
+- [x] Добавить логирование в datastore/users.py
+- [x] Обновить Dockerfile (создать /app/logs)
+- [x] Обновить docker-compose.yml (volume для логов)
+- [x] Обновить .dockerignore (добавить *.log)
+- [x] Обновить README.md (секция Logging)
+- [x] Обновить memory-bank/techContext.md (добавить Logging)
+- [x] Обновить memory-bank/progress.md (добавить Phase 8 Logging Infrastructure)
+</replace_in_file>
 
 ### Security Concerns (Educational Justification)
 1. **MD5 хэширование** - криптографически сломано
