@@ -1,4 +1,4 @@
-from bottle import post, request, response
+from bottle import request, response
 from datastore import users
 from data.config import Config
 from utils.logger import get_logger
@@ -6,7 +6,6 @@ from utils.logger import get_logger
 logger = get_logger(__name__)
 
 
-@post('/login')
 def do_login(db):
     logger.debug(f"Login attempt from IP: {request.remote_addr}")
     username = request.json.get('username')
@@ -30,7 +29,6 @@ def do_login(db):
     return dict(login_success=user is not None)
 
 
-@post('/register')
 def register(db):
     logger.debug(f"Registration attempt from IP: {request.remote_addr}")
     firstname = request.json.get('firstname')

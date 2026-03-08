@@ -1,4 +1,4 @@
-from bottle import get, request, response, HTTPError
+from bottle import request, response, HTTPError
 from datastore import users
 from data.config import Config
 from utils.logger import get_logger
@@ -6,7 +6,6 @@ from utils.logger import get_logger
 logger = get_logger(__name__)
 
 
-@get('/user/current')
 def current_user(db):
     logger.debug("Request to /user/current")
     cookie_content = request.get_cookie("account", secret=Config.config.cookie_secret)
@@ -22,7 +21,6 @@ def current_user(db):
     return HTTPError(401, 'Access denied')
 
 
-@get('/user/<username>')
 def user_by_username(db, username):
     logger.debug(f"Request to /user/{username}")
     cookie_content = request.get_cookie("account", secret=Config.config.cookie_secret)

@@ -28,3 +28,536 @@
 2026-03-08 22:07:12 - datastore.connection - DEBUG - Database connection closed
 2026-03-08 22:07:12 - datastore.store - INFO - Current database schema version: 4
 2026-03-08 22:07:12 - __main__ - INFO - Starting Bottle server on 80 port
+2026-03-08 22:42:42 - __main__ - INFO - Starting up application...
+2026-03-08 22:42:42 - __main__ - INFO - Configuration: PG_HOST=postgres, PG_PORT=5432, PG_DATABASE=simple_website
+2026-03-08 22:42:42 - datastore.store - DEBUG - Checking database schema version
+2026-03-08 22:42:42 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 22:42:42 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 22:42:42 - datastore.store - DEBUG - Executing SQL: select max(version) from migrations;
+2026-03-08 22:42:43 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 22:42:43 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 22:42:43 - datastore.store - INFO - Current database schema version: 4
+2026-03-08 22:42:43 - api.db_plugin - INFO - Database plugin installed
+2026-03-08 22:42:43 - __main__ - INFO - Starting Bottle server on 80 port
+2026-03-08 23:10:42 - __main__ - INFO - Starting up application...
+2026-03-08 23:10:42 - __main__ - INFO - Configuration: PG_HOST=postgres, PG_PORT=5432, PG_DATABASE=simple_website
+2026-03-08 23:10:42 - datastore.store - DEBUG - Checking database schema version
+2026-03-08 23:10:42 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:10:43 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:10:43 - datastore.store - DEBUG - Executing SQL: select max(version) from migrations;
+2026-03-08 23:10:43 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:10:43 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:10:43 - datastore.store - INFO - Current database schema version: 4
+2026-03-08 23:10:43 - api.db_plugin - INFO - Database plugin installed
+2026-03-08 23:10:43 - __main__ - INFO - Starting Bottle server on 80 port
+2026-03-08 23:13:01 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:13:01 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:13:01 - datastore.connection - ERROR - Database transaction failed: login() got an unexpected keyword argument 'db'
+Traceback (most recent call last):
+  File "/app/api/db_plugin.py", line 24, in wrapper
+    return callback(*args, **kwargs)
+TypeError: login() got an unexpected keyword argument 'db'
+2026-03-08 23:13:01 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:13:01 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:13:01 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:13:01 - datastore.connection - ERROR - Database transaction failed: login() got an unexpected keyword argument 'db'
+Traceback (most recent call last):
+  File "/app/api/db_plugin.py", line 24, in wrapper
+    return callback(*args, **kwargs)
+TypeError: login() got an unexpected keyword argument 'db'
+2026-03-08 23:13:01 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:13:03 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:13:03 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:13:03 - datastore.connection - ERROR - Database transaction failed: index() got an unexpected keyword argument 'db'
+Traceback (most recent call last):
+  File "/app/api/db_plugin.py", line 24, in wrapper
+    return callback(*args, **kwargs)
+TypeError: index() got an unexpected keyword argument 'db'
+2026-03-08 23:13:04 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:13:05 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:13:05 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:13:05 - datastore.connection - ERROR - Database transaction failed: index() got an unexpected keyword argument 'db'
+Traceback (most recent call last):
+  File "/app/api/db_plugin.py", line 24, in wrapper
+    return callback(*args, **kwargs)
+TypeError: index() got an unexpected keyword argument 'db'
+2026-03-08 23:13:05 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:17:29 - __main__ - INFO - Starting up application...
+2026-03-08 23:17:29 - __main__ - INFO - Configuration: PG_HOST=postgres, PG_PORT=5432, PG_DATABASE=simple_website
+2026-03-08 23:17:29 - datastore.store - DEBUG - Checking database schema version
+2026-03-08 23:17:29 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:17:29 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:17:29 - datastore.store - DEBUG - Executing SQL: select max(version) from migrations;
+2026-03-08 23:17:29 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:17:29 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:17:29 - datastore.store - INFO - Current database schema version: 4
+2026-03-08 23:17:29 - api.db_plugin - INFO - Database plugin installed
+2026-03-08 23:17:29 - __main__ - INFO - Starting Bottle server on 80 port
+2026-03-08 23:17:57 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:17:58 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:17:58 - api.things - DEBUG - Request to /things
+2026-03-08 23:17:58 - datastore.connection - ERROR - Database transaction failed: 'psycopg2.extensions.connection' object has no attribute 'execute'
+Traceback (most recent call last):
+  File "/app/api/db_plugin.py", line 30, in wrapper
+    return callback(*args, **kwargs)
+  File "/app/api/things.py", line 9, in get_things
+    all_things = things.get_all_things(db)
+  File "/app/datastore/things.py", line 2, in get_all_things
+    cursor = db.execute('SELECT * from things')
+             ^^^^^^^^^^
+AttributeError: 'psycopg2.extensions.connection' object has no attribute 'execute'
+2026-03-08 23:17:58 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:25:01 - __main__ - INFO - Starting up application...
+2026-03-08 23:25:01 - __main__ - INFO - Configuration: PG_HOST=postgres, PG_PORT=5432, PG_DATABASE=simple_website
+2026-03-08 23:25:01 - datastore.store - DEBUG - Checking database schema version
+2026-03-08 23:25:01 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:25:01 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:25:01 - datastore.store - DEBUG - Executing SQL: select max(version) from migrations;
+2026-03-08 23:25:01 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:25:01 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:25:01 - datastore.store - INFO - Current database schema version: 4
+2026-03-08 23:25:01 - api.db_plugin - INFO - Database plugin installed
+2026-03-08 23:25:01 - __main__ - INFO - Starting Bottle server on 80 port
+2026-03-08 23:26:20 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:26:20 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:26:20 - api.login - DEBUG - Registration attempt from IP: 172.18.0.1
+2026-03-08 23:26:20 - datastore.users - DEBUG - Fetching user by username='u'
+2026-03-08 23:26:20 - datastore.users - DEBUG - Looking up user_id for username='u'
+2026-03-08 23:26:21 - datastore.users - WARNING - username='u' not found in auth_methods
+2026-03-08 23:26:21 - datastore.users - DEBUG - Fetching user by id=None
+2026-03-08 23:26:21 - datastore.users - WARNING - User with id=None not found
+2026-03-08 23:26:21 - datastore.users - DEBUG - Creating user: username='u', firstname='F', lastname='L'
+2026-03-08 23:26:21 - datastore.users - DEBUG - Calculating password hash
+2026-03-08 23:26:21 - datastore.connection - ERROR - Database transaction failed: column "is_admin" is of type boolean but expression is of type integer
+LINE 1: ...at, is_admin) values('F', 'L', CURRENT_TIMESTAMP, 0) RETURNI...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+Traceback (most recent call last):
+  File "/app/api/db_plugin.py", line 30, in wrapper
+    return callback(*args, **kwargs)
+  File "/app/api/login.py", line 45, in register
+    registration_success = users.create_user(db, Config.config, firstname, lastname, username, password)
+  File "/app/datastore/users.py", line 21, in create_user
+    cursor.execute(
+    ~~~~~~~~~~~~~~^
+        'INSERT INTO users(firstname, lastname, created_at, is_admin) values(%s, %s, CURRENT_TIMESTAMP, 0) RETURNING id;',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        (firstname, lastname))
+        ^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.DatatypeMismatch: column "is_admin" is of type boolean but expression is of type integer
+LINE 1: ...at, is_admin) values('F', 'L', CURRENT_TIMESTAMP, 0) RETURNI...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+2026-03-08 23:26:21 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:29:33 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:29:33 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:29:33 - api.login - DEBUG - Registration attempt from IP: 172.18.0.1
+2026-03-08 23:29:33 - datastore.users - DEBUG - Fetching user by username='u'
+2026-03-08 23:29:33 - datastore.users - DEBUG - Looking up user_id for username='u'
+2026-03-08 23:29:33 - datastore.users - WARNING - username='u' not found in auth_methods
+2026-03-08 23:29:33 - datastore.users - DEBUG - Fetching user by id=None
+2026-03-08 23:29:33 - datastore.users - WARNING - User with id=None not found
+2026-03-08 23:29:33 - datastore.users - DEBUG - Creating user: username='u', firstname='F', lastname='L'
+2026-03-08 23:29:33 - datastore.users - DEBUG - Calculating password hash
+2026-03-08 23:29:33 - datastore.connection - ERROR - Database transaction failed: column "is_admin" is of type boolean but expression is of type integer
+LINE 1: ...at, is_admin) values('F', 'L', CURRENT_TIMESTAMP, 0) RETURNI...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+Traceback (most recent call last):
+  File "/app/api/db_plugin.py", line 30, in wrapper
+    return callback(*args, **kwargs)
+  File "/app/api/login.py", line 45, in register
+    registration_success = users.create_user(db, Config.config, firstname, lastname, username, password)
+  File "/app/datastore/users.py", line 21, in create_user
+    cursor.execute(
+    ~~~~~~~~~~~~~~^
+        'INSERT INTO users(firstname, lastname, created_at, is_admin) values(%s, %s, CURRENT_TIMESTAMP, 0) RETURNING id;',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        (firstname, lastname))
+        ^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.DatatypeMismatch: column "is_admin" is of type boolean but expression is of type integer
+LINE 1: ...at, is_admin) values('F', 'L', CURRENT_TIMESTAMP, 0) RETURNI...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+2026-03-08 23:29:33 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:32:10 - __main__ - INFO - Starting up application...
+2026-03-08 23:32:10 - __main__ - INFO - Configuration: PG_HOST=postgres, PG_PORT=5432, PG_DATABASE=simple_website
+2026-03-08 23:32:10 - datastore.store - DEBUG - Checking database schema version
+2026-03-08 23:32:10 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:32:10 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:32:10 - datastore.store - DEBUG - Executing SQL: select max(version) from migrations;
+2026-03-08 23:32:10 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:32:10 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:32:10 - datastore.store - INFO - Current database schema version: 4
+2026-03-08 23:32:10 - api.db_plugin - INFO - Database plugin installed
+2026-03-08 23:32:10 - __main__ - INFO - Starting Bottle server on 80 port
+2026-03-08 23:32:52 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:32:52 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:32:52 - api.login - DEBUG - Registration attempt from IP: 172.18.0.1
+2026-03-08 23:32:52 - datastore.users - DEBUG - Fetching user by username='u'
+2026-03-08 23:32:52 - datastore.users - DEBUG - Looking up user_id for username='u'
+2026-03-08 23:32:52 - datastore.users - WARNING - username='u' not found in auth_methods
+2026-03-08 23:32:52 - datastore.users - DEBUG - Fetching user by id=None
+2026-03-08 23:32:52 - datastore.users - WARNING - User with id=None not found
+2026-03-08 23:32:52 - datastore.users - DEBUG - Creating user: username='u', firstname='f', lastname='l'
+2026-03-08 23:32:52 - datastore.users - DEBUG - Calculating password hash
+2026-03-08 23:32:52 - datastore.users - DEBUG - User record created with id=1
+2026-03-08 23:32:52 - datastore.users - INFO - User 'u' created successfully with id=1
+2026-03-08 23:32:52 - api.login - INFO - User 'u' registered successfully
+2026-03-08 23:32:52 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:32:52 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:33:01 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:33:01 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:33:01 - api.login - DEBUG - Login attempt from IP: 172.18.0.1
+2026-03-08 23:33:01 - datastore.users - DEBUG - Checking login for username='u'
+2026-03-08 23:33:01 - datastore.users - DEBUG - Calculating password hash
+2026-03-08 23:33:01 - datastore.connection - ERROR - Database transaction failed: tuple indices must be integers or slices, not str
+Traceback (most recent call last):
+  File "/app/api/db_plugin.py", line 30, in wrapper
+    return callback(*args, **kwargs)
+  File "/app/api/login.py", line 13, in do_login
+    user_id = users.check_login(db, Config.config, username, password)
+  File "/app/datastore/users.py", line 55, in check_login
+    user_id = int(row['user_id'])
+                  ~~~^^^^^^^^^^^
+TypeError: tuple indices must be integers or slices, not str
+2026-03-08 23:33:01 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:36:12 - __main__ - INFO - Starting up application...
+2026-03-08 23:36:12 - __main__ - INFO - Configuration: PG_HOST=postgres, PG_PORT=5432, PG_DATABASE=simple_website
+2026-03-08 23:36:12 - datastore.store - DEBUG - Checking database schema version
+2026-03-08 23:36:12 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:36:12 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:36:12 - datastore.store - DEBUG - Executing SQL: select max(version) from migrations;
+2026-03-08 23:36:12 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:36:12 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:36:12 - datastore.store - INFO - Current database schema version: 4
+2026-03-08 23:36:12 - api.db_plugin - INFO - Database plugin installed
+2026-03-08 23:36:12 - __main__ - INFO - Starting Bottle server on 80 port
+2026-03-08 23:36:32 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:36:32 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:36:32 - api.login - DEBUG - Login attempt from IP: 172.18.0.1
+2026-03-08 23:36:32 - datastore.users - DEBUG - Checking login for username='u'
+2026-03-08 23:36:32 - datastore.users - DEBUG - Calculating password hash
+2026-03-08 23:36:32 - datastore.users - DEBUG - Login successful for username='u', user_id=1
+2026-03-08 23:36:32 - datastore.users - DEBUG - Fetching user by id=1
+2026-03-08 23:36:32 - datastore.users - DEBUG - Found user id=1, username=N/A
+2026-03-08 23:36:32 - api.login - INFO - User 'u' logged in successfully from IP: 172.18.0.1
+2026-03-08 23:36:32 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:36:32 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:36:44 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:36:44 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:36:44 - api.user - DEBUG - Request to /user/current
+2026-03-08 23:36:44 - api.user - WARNING - Unauthorized access attempt to /user/current
+2026-03-08 23:36:44 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:36:44 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:36:51 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:36:51 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:36:51 - api.login - DEBUG - Login attempt from IP: 172.18.0.1
+2026-03-08 23:36:51 - datastore.users - DEBUG - Checking login for username='u'
+2026-03-08 23:36:51 - datastore.users - DEBUG - Calculating password hash
+2026-03-08 23:36:51 - datastore.users - DEBUG - Login successful for username='u', user_id=1
+2026-03-08 23:36:51 - datastore.users - DEBUG - Fetching user by id=1
+2026-03-08 23:36:51 - datastore.users - DEBUG - Found user id=1, username=N/A
+2026-03-08 23:36:51 - api.login - INFO - User 'u' logged in successfully from IP: 172.18.0.1
+2026-03-08 23:36:51 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:36:51 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:39:30 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:39:30 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:39:30 - api.things - DEBUG - Request to /things
+2026-03-08 23:39:30 - api.things - INFO - Returned 0 things
+2026-03-08 23:39:30 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:39:30 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:41:54 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:41:54 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:41:54 - api.things - DEBUG - Request to /things
+2026-03-08 23:41:54 - api.things - INFO - Returned 1 things
+2026-03-08 23:41:54 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:41:54 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:42:13 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:42:13 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:42:13 - api.things - DEBUG - Request to /things
+2026-03-08 23:42:13 - api.things - INFO - Returned 1 things
+2026-03-08 23:42:13 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:42:13 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:42:29 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:42:29 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:42:29 - api.login - DEBUG - Login attempt from IP: 172.18.0.1
+2026-03-08 23:42:29 - datastore.users - DEBUG - Checking login for username='u'
+2026-03-08 23:42:29 - datastore.users - DEBUG - Calculating password hash
+2026-03-08 23:42:29 - datastore.users - DEBUG - Login successful for username='u', user_id=1
+2026-03-08 23:42:29 - datastore.users - DEBUG - Fetching user by id=1
+2026-03-08 23:42:29 - datastore.users - DEBUG - Found user id=1, username=N/A
+2026-03-08 23:42:29 - api.login - INFO - User 'u' logged in successfully from IP: 172.18.0.1
+2026-03-08 23:42:29 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:42:29 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:42:37 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:42:37 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:42:37 - api.user - DEBUG - Request to /user/current
+2026-03-08 23:42:37 - datastore.users - DEBUG - Fetching user by username='u'
+2026-03-08 23:42:37 - datastore.users - DEBUG - Looking up user_id for username='u'
+2026-03-08 23:42:37 - datastore.users - DEBUG - Found user_id=1 for username='u'
+2026-03-08 23:42:37 - datastore.users - DEBUG - Fetching user by id=1
+2026-03-08 23:42:37 - datastore.users - DEBUG - Found user id=1, username=N/A
+2026-03-08 23:42:37 - api.user - INFO - User 'u' accessed their profile
+2026-03-08 23:42:37 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:42:37 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:42:45 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:42:45 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:42:45 - api.login - DEBUG - Login attempt from IP: 172.18.0.1
+2026-03-08 23:42:45 - datastore.users - DEBUG - Checking login for username='u'
+2026-03-08 23:42:45 - datastore.users - DEBUG - Calculating password hash
+2026-03-08 23:42:45 - datastore.users - DEBUG - Login successful for username='u', user_id=1
+2026-03-08 23:42:45 - datastore.users - DEBUG - Fetching user by id=1
+2026-03-08 23:42:45 - datastore.users - DEBUG - Found user id=1, username=N/A
+2026-03-08 23:42:45 - api.login - INFO - User 'u' logged in successfully from IP: 172.18.0.1
+2026-03-08 23:42:45 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:42:45 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:42:47 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:42:47 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:42:47 - api.user - DEBUG - Request to /user/current
+2026-03-08 23:42:47 - datastore.users - DEBUG - Fetching user by username='u'
+2026-03-08 23:42:47 - datastore.users - DEBUG - Looking up user_id for username='u'
+2026-03-08 23:42:47 - datastore.users - DEBUG - Found user_id=1 for username='u'
+2026-03-08 23:42:47 - datastore.users - DEBUG - Fetching user by id=1
+2026-03-08 23:42:47 - datastore.users - DEBUG - Found user id=1, username=N/A
+2026-03-08 23:42:47 - api.user - INFO - User 'u' accessed their profile
+2026-03-08 23:42:47 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:42:47 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:43:22 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:43:22 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:43:22 - api.login - DEBUG - Login attempt from IP: 172.18.0.1
+2026-03-08 23:43:22 - datastore.users - DEBUG - Checking login for username='admin'
+2026-03-08 23:43:22 - datastore.users - DEBUG - Calculating password hash
+2026-03-08 23:43:22 - datastore.users - WARNING - Login failed for username='admin': invalid credentials
+2026-03-08 23:43:22 - api.login - WARNING - Failed login attempt for username 'admin' from IP: 172.18.0.1
+2026-03-08 23:43:22 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:43:22 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:45:05 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:45:05 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:45:05 - api.login - DEBUG - Login attempt from IP: 172.18.0.1
+2026-03-08 23:45:05 - datastore.users - DEBUG - Checking login for username='u'
+2026-03-08 23:45:05 - datastore.users - DEBUG - Calculating password hash
+2026-03-08 23:45:05 - datastore.users - DEBUG - Login successful for username='u', user_id=1
+2026-03-08 23:45:05 - datastore.users - DEBUG - Fetching user by id=1
+2026-03-08 23:45:05 - datastore.users - DEBUG - Found user id=1, username=N/A
+2026-03-08 23:45:05 - api.login - INFO - User 'u' logged in successfully from IP: 172.18.0.1
+2026-03-08 23:45:05 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:45:05 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:45:06 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:45:06 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:45:06 - api.user - DEBUG - Request to /user/current
+2026-03-08 23:45:06 - datastore.users - DEBUG - Fetching user by username='u'
+2026-03-08 23:45:06 - datastore.users - DEBUG - Looking up user_id for username='u'
+2026-03-08 23:45:06 - datastore.users - DEBUG - Found user_id=1 for username='u'
+2026-03-08 23:45:06 - datastore.users - DEBUG - Fetching user by id=1
+2026-03-08 23:45:06 - datastore.users - DEBUG - Found user id=1, username=N/A
+2026-03-08 23:45:06 - api.user - INFO - User 'u' accessed their profile
+2026-03-08 23:45:06 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:45:06 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:45:10 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:45:10 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:45:10 - api.user - DEBUG - Request to /user/current
+2026-03-08 23:45:10 - datastore.users - DEBUG - Fetching user by username='u'
+2026-03-08 23:45:10 - datastore.users - DEBUG - Looking up user_id for username='u'
+2026-03-08 23:45:10 - datastore.users - DEBUG - Found user_id=1 for username='u'
+2026-03-08 23:45:10 - datastore.users - DEBUG - Fetching user by id=1
+2026-03-08 23:45:10 - datastore.users - DEBUG - Found user id=1, username=N/A
+2026-03-08 23:45:10 - api.user - INFO - User 'u' accessed their profile
+2026-03-08 23:45:10 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:45:10 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:45:17 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:45:17 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:45:17 - api.login - DEBUG - Login attempt from IP: 172.18.0.1
+2026-03-08 23:45:17 - datastore.users - DEBUG - Checking login for username='u'
+2026-03-08 23:45:17 - datastore.users - DEBUG - Calculating password hash
+2026-03-08 23:45:17 - datastore.users - DEBUG - Login successful for username='u', user_id=1
+2026-03-08 23:45:17 - datastore.users - DEBUG - Fetching user by id=1
+2026-03-08 23:45:17 - datastore.users - DEBUG - Found user id=1, username=N/A
+2026-03-08 23:45:17 - api.login - INFO - User 'u' logged in successfully from IP: 172.18.0.1
+2026-03-08 23:45:17 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:45:17 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:45:19 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:45:19 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:45:19 - api.user - DEBUG - Request to /user/current
+2026-03-08 23:45:19 - datastore.users - DEBUG - Fetching user by username='u'
+2026-03-08 23:45:19 - datastore.users - DEBUG - Looking up user_id for username='u'
+2026-03-08 23:45:19 - datastore.users - DEBUG - Found user_id=1 for username='u'
+2026-03-08 23:45:19 - datastore.users - DEBUG - Fetching user by id=1
+2026-03-08 23:45:19 - datastore.users - DEBUG - Found user id=1, username=N/A
+2026-03-08 23:45:19 - api.user - INFO - User 'u' accessed their profile
+2026-03-08 23:45:19 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:45:19 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:45:25 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:45:25 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:45:25 - api.login - DEBUG - Login attempt from IP: 172.18.0.1
+2026-03-08 23:45:25 - datastore.users - DEBUG - Checking login for username='u'
+2026-03-08 23:45:25 - datastore.users - DEBUG - Calculating password hash
+2026-03-08 23:45:25 - datastore.users - DEBUG - Login successful for username='u', user_id=1
+2026-03-08 23:45:25 - datastore.users - DEBUG - Fetching user by id=1
+2026-03-08 23:45:25 - datastore.users - DEBUG - Found user id=1, username=N/A
+2026-03-08 23:45:25 - api.login - INFO - User 'u' logged in successfully from IP: 172.18.0.1
+2026-03-08 23:45:25 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:45:25 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:45:26 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:45:26 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:45:26 - api.user - DEBUG - Request to /user/current
+2026-03-08 23:45:26 - datastore.users - DEBUG - Fetching user by username='u'
+2026-03-08 23:45:26 - datastore.users - DEBUG - Looking up user_id for username='u'
+2026-03-08 23:45:26 - datastore.users - DEBUG - Found user_id=1 for username='u'
+2026-03-08 23:45:26 - datastore.users - DEBUG - Fetching user by id=1
+2026-03-08 23:45:26 - datastore.users - DEBUG - Found user id=1, username=N/A
+2026-03-08 23:45:26 - api.user - INFO - User 'u' accessed their profile
+2026-03-08 23:45:26 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:45:26 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:46:21 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:46:21 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:46:21 - api.login - DEBUG - Login attempt from IP: 172.18.0.1
+2026-03-08 23:46:21 - datastore.users - DEBUG - Checking login for username='u'
+2026-03-08 23:46:21 - datastore.users - DEBUG - Calculating password hash
+2026-03-08 23:46:21 - datastore.users - DEBUG - Login successful for username='u', user_id=1
+2026-03-08 23:46:21 - datastore.users - DEBUG - Fetching user by id=1
+2026-03-08 23:46:21 - datastore.users - DEBUG - Found user id=1, username=N/A
+2026-03-08 23:46:21 - api.login - INFO - User 'u' logged in successfully from IP: 172.18.0.1
+2026-03-08 23:46:21 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:46:21 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:46:25 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:46:25 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:46:25 - api.user - DEBUG - Request to /user/current
+2026-03-08 23:46:25 - datastore.users - DEBUG - Fetching user by username='u'
+2026-03-08 23:46:25 - datastore.users - DEBUG - Looking up user_id for username='u'
+2026-03-08 23:46:25 - datastore.users - DEBUG - Found user_id=1 for username='u'
+2026-03-08 23:46:25 - datastore.users - DEBUG - Fetching user by id=1
+2026-03-08 23:46:25 - datastore.users - DEBUG - Found user id=1, username=N/A
+2026-03-08 23:46:25 - api.user - INFO - User 'u' accessed their profile
+2026-03-08 23:46:25 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:46:25 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:54:10 - __main__ - INFO - Starting up application...
+2026-03-08 23:54:10 - __main__ - INFO - Configuration: PG_HOST=postgres, PG_PORT=5432, PG_DATABASE=simple_website
+2026-03-08 23:54:10 - datastore.store - DEBUG - Checking database schema version
+2026-03-08 23:54:10 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:54:10 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:54:10 - datastore.store - DEBUG - Executing SQL: select max(version) from migrations;
+2026-03-08 23:54:10 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:54:10 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:54:10 - datastore.store - INFO - Current database schema version: 4
+2026-03-08 23:54:10 - api.db_plugin - INFO - Database plugin installed
+2026-03-08 23:54:10 - __main__ - INFO - Starting Bottle server on 80 port
+2026-03-08 23:54:15 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:54:15 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:54:15 - api.user - DEBUG - Request to /user/current
+2026-03-08 23:54:15 - api.user - WARNING - Unauthorized access attempt to /user/current
+2026-03-08 23:54:15 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:54:15 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:54:40 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:54:40 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:54:40 - api.login - DEBUG - Registration attempt from IP: 172.18.0.1
+2026-03-08 23:54:40 - datastore.users - DEBUG - Fetching user by username='u'
+2026-03-08 23:54:40 - datastore.users - DEBUG - Looking up user_id for username='u'
+2026-03-08 23:54:40 - datastore.users - DEBUG - Found user_id=1 for username='u'
+2026-03-08 23:54:40 - datastore.users - DEBUG - Fetching user by id=1
+2026-03-08 23:54:40 - datastore.users - DEBUG - Found user id=1, username=N/A
+2026-03-08 23:54:40 - api.login - WARNING - Registration failed: username 'u' already exists
+2026-03-08 23:54:40 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:54:40 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:54:52 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:54:52 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:54:52 - api.login - DEBUG - Registration attempt from IP: 172.18.0.1
+2026-03-08 23:54:52 - datastore.users - DEBUG - Fetching user by username='y'
+2026-03-08 23:54:52 - datastore.users - DEBUG - Looking up user_id for username='y'
+2026-03-08 23:54:52 - datastore.users - WARNING - username='y' not found in auth_methods
+2026-03-08 23:54:52 - datastore.users - DEBUG - Fetching user by id=None
+2026-03-08 23:54:52 - datastore.users - WARNING - User with id=None not found
+2026-03-08 23:54:52 - datastore.users - DEBUG - Creating user: username='y', firstname='f', lastname='l'
+2026-03-08 23:54:52 - datastore.users - DEBUG - Calculating password hash
+2026-03-08 23:54:53 - datastore.users - DEBUG - User record created with id=2
+2026-03-08 23:54:53 - datastore.users - INFO - User 'y' created successfully with id=2
+2026-03-08 23:54:53 - api.login - INFO - User 'y' registered successfully
+2026-03-08 23:54:53 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:54:53 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:55:02 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:55:02 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:55:02 - api.login - DEBUG - Login attempt from IP: 172.18.0.1
+2026-03-08 23:55:02 - datastore.users - DEBUG - Checking login for username='y'
+2026-03-08 23:55:02 - datastore.users - DEBUG - Calculating password hash
+2026-03-08 23:55:02 - datastore.users - DEBUG - Login successful for username='y', user_id=2
+2026-03-08 23:55:02 - datastore.users - DEBUG - Fetching user by id=2
+2026-03-08 23:55:02 - datastore.users - DEBUG - Found user id=2, username=N/A
+2026-03-08 23:55:02 - api.login - INFO - User 'y' logged in successfully from IP: 172.18.0.1
+2026-03-08 23:55:02 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:55:02 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:55:04 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:55:04 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:55:04 - api.user - DEBUG - Request to /user/current
+2026-03-08 23:55:04 - datastore.users - DEBUG - Fetching user by username='y'
+2026-03-08 23:55:04 - datastore.users - DEBUG - Looking up user_id for username='y'
+2026-03-08 23:55:04 - datastore.users - DEBUG - Found user_id=2 for username='y'
+2026-03-08 23:55:04 - datastore.users - DEBUG - Fetching user by id=2
+2026-03-08 23:55:04 - datastore.users - DEBUG - Found user id=2, username=N/A
+2026-03-08 23:55:04 - api.user - INFO - User 'y' accessed their profile
+2026-03-08 23:55:04 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:55:04 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:55:13 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:55:13 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:55:13 - api.login - DEBUG - Login attempt from IP: 172.18.0.1
+2026-03-08 23:55:13 - datastore.users - DEBUG - Checking login for username='y'
+2026-03-08 23:55:13 - datastore.users - DEBUG - Calculating password hash
+2026-03-08 23:55:13 - datastore.users - DEBUG - Login successful for username='y', user_id=2
+2026-03-08 23:55:13 - datastore.users - DEBUG - Fetching user by id=2
+2026-03-08 23:55:13 - datastore.users - DEBUG - Found user id=2, username=N/A
+2026-03-08 23:55:13 - api.login - INFO - User 'y' logged in successfully from IP: 172.18.0.1
+2026-03-08 23:55:13 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:55:13 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:56:09 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:56:09 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:56:09 - api.user - DEBUG - Request to /user/current
+2026-03-08 23:56:09 - api.user - WARNING - Unauthorized access attempt to /user/current
+2026-03-08 23:56:09 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:56:09 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:56:15 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:56:15 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:56:15 - api.login - DEBUG - Login attempt from IP: 172.18.0.1
+2026-03-08 23:56:15 - datastore.users - DEBUG - Checking login for username='u'
+2026-03-08 23:56:15 - datastore.users - DEBUG - Calculating password hash
+2026-03-08 23:56:15 - datastore.users - DEBUG - Login successful for username='u', user_id=1
+2026-03-08 23:56:15 - datastore.users - DEBUG - Fetching user by id=1
+2026-03-08 23:56:15 - datastore.users - DEBUG - Found user id=1, username=N/A
+2026-03-08 23:56:15 - api.login - INFO - User 'u' logged in successfully from IP: 172.18.0.1
+2026-03-08 23:56:15 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:56:15 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:56:17 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:56:17 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:56:17 - api.user - DEBUG - Request to /user/current
+2026-03-08 23:56:17 - datastore.users - DEBUG - Fetching user by username='u'
+2026-03-08 23:56:17 - datastore.users - DEBUG - Looking up user_id for username='u'
+2026-03-08 23:56:17 - datastore.users - DEBUG - Found user_id=1 for username='u'
+2026-03-08 23:56:17 - datastore.users - DEBUG - Fetching user by id=1
+2026-03-08 23:56:17 - datastore.users - DEBUG - Found user id=1, username=N/A
+2026-03-08 23:56:17 - api.user - INFO - User 'u' accessed their profile
+2026-03-08 23:56:17 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:56:17 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:57:25 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:57:25 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:57:25 - api.user - DEBUG - Request to /user/current
+2026-03-08 23:57:25 - api.user - WARNING - Unauthorized access attempt to /user/current
+2026-03-08 23:57:25 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:57:25 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:57:28 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:57:28 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:57:28 - api.user - DEBUG - Request to /user/current
+2026-03-08 23:57:28 - api.user - WARNING - Unauthorized access attempt to /user/current
+2026-03-08 23:57:28 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:57:28 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:57:31 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:57:31 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:57:31 - api.things - DEBUG - Request to /things
+2026-03-08 23:57:31 - api.things - INFO - Returned 1 things
+2026-03-08 23:57:31 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:57:31 - datastore.connection - DEBUG - Database connection closed
+2026-03-08 23:58:00 - datastore.connection - DEBUG - Opening database connection
+2026-03-08 23:58:00 - datastore.connection - INFO - Connected to PostgreSQL database: simple_website on postgres:5432
+2026-03-08 23:58:00 - api.things - DEBUG - Request to /things
+2026-03-08 23:58:00 - api.things - INFO - Returned 1 things
+2026-03-08 23:58:00 - datastore.connection - DEBUG - Committing database transaction
+2026-03-08 23:58:00 - datastore.connection - DEBUG - Database connection closed

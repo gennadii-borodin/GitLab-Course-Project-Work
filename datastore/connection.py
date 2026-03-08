@@ -1,5 +1,6 @@
 import psycopg2
 from psycopg2 import Error
+from psycopg2.extras import DictCursor
 import os
 from utils.logger import get_logger
 
@@ -34,7 +35,8 @@ class Connection(object):
                 port=self.config.pg_port,
                 user=self.config.pg_user,
                 password=self.config.pg_password,
-                database=self.config.pg_database
+                database=self.config.pg_database,
+                cursor_factory=DictCursor
             )
             logger.info(f"Connected to PostgreSQL database: {self.config.pg_database} on {self.config.pg_host}:{self.config.pg_port}")
             return conn
