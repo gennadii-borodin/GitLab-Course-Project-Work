@@ -73,12 +73,26 @@
 - Встроенный Bottle сервер (авто-reload в debug режиме)
 - ngrok для публикации локального сервера
 - Python venv для изоляции зависимостей
+- Docker и Docker Compose для контейнеризации
 
 ### Dependencies (requirements.txt)
 ```
 bottle==0.12.19
 psycopg2-binary==2.9.9
 ```
+
+### Containerization
+- **Docker** - контейнеризация приложения
+  - Multi-stage build не требуется (простой образ)
+  - Slim образ Python 3.14 для минимального размера
+  - Healthcheck для проверки доступности сервиса
+
+- **Docker Compose** - оркестрация многоконтейнерного приложения
+  - PostgreSQL 17 в отдельном контейнере
+  - Изолированная сеть app-network
+  - Docker volume для персистентных данных PostgreSQL
+  - Зависимость web от postgres (healthcheck condition)
+  - Volume mounts для кода и данных (dev-friendly)
 
 ### No Build Step
 Проект не требует сборки фронтенда:
@@ -175,7 +189,7 @@ python3 main.py
 - Cypress для E2E тестов
 
 ### DevOps
-- Docker контейнеризация
-- CI/CD pipeline
-- Production WSGI сервер (gunicorn/uvicorn)
-- Reverse proxy (nginx)
+- Docker и Docker Compose для локального development и deployment
+- CI/CD pipeline (для будущего implementation)
+- Production WSGI сервер (gunicorn/uvicorn) - рекомендуется для production
+- Reverse proxy (nginx) с SSL termination - рекомендуется для production

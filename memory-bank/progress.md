@@ -88,6 +88,16 @@
 - [x] Обновлены store.py и users.py для psycopg2
 - [x] Обновлена документация (README, Memory Bank)
 
+### Phase 7: Docker Deployment (✓)
+- [x] Создан Dockerfile (Python 3.14-slim, healthcheck)
+- [x] Создан docker-compose.yml с PostgreSQL 17
+- [x] Настроена отдельная сеть app-network
+- [x] Настроен volume postgres_data для персистентности
+- [x] Добавлен .dockerignore
+- [x] Обновлен README.md с инструкциями по Docker
+- [x] Настроен healthcheck для PostgreSQL и web сервиса
+- [x] Настроено автоматическое подключение web к postgres (depends_on with condition)
+
 ## Известные проблемы (Known Issues)
 
 ### Security Concerns (Educational Justification)
@@ -156,7 +166,6 @@
 - [ ] **Primary key** для auth_methods
 
 ### Long-term (Низкий приоритет)
-- [ ] **Dockerfile** и docker-compose
 - [ ] **TypeScript** conversion for frontend
 - [ ] **Vite/Vue CLI** build system
 - [ ] **Google OAuth** интеграция
@@ -175,15 +184,16 @@
 ## Версии
 
 ### Текущая версия
-- **v2.0.0** - PostgreSQL migration (functional prototype)
+- **v3.0.0** - PostgreSQL + Docker Compose (production-ready prototype)
 - **Дата**: Март 2026
 - **Статус**: Stable for demo/educational use
 
 ### Зависимости
-- Python 3.8+
+- Python 3.14 (Docker) / 3.8+ (local)
 - Bottle 0.12.19
-- PostgreSQL (внешний сервер)
+- PostgreSQL 17 (Docker) / любой PostgreSQL (local)
 - psycopg2-binary 2.9.9
+- Docker & Docker Compose (для контейнеризации)
 - Vue.js 3.x (CDN или local)
 - Bootstrap 5.x
 - Axios 1.x
@@ -205,8 +215,19 @@
 - Убран bottle_sqlite plugin, управление подключениями теперь ручное
 - Обновлена конфигурация: добавлены PG_ параметры
 
+### Docker Compose Deployment (08.03.2026)
+Проект контейнеризирован с Docker и Docker Compose:
+- Dockerfile на базе Python 3.14-slim с healthcheck
+- docker-compose.yml с PostgreSQL 17 и web сервисом
+- Изолированная сеть app-network
+- Docker volume postgres_data для персистентности БД
+- Автоматическое ожидание готовности PostgreSQL (healthcheck condition)
+- Volume mounts для разработки (код и данные)
+- Порт 8080:80 для веб-приложения
+- Полная документация в README.md
+
 Проект успешно инициализирован и протестирован. Все основные функции работают. Предназначен для образовательных целей и не должен использоваться в production без серьезных доработок в области безопасности и масштабируемости.
 
 **Memory Bank создан**: 08.03.2026
-**Последнее обновление**: 08.03.2026 (миграция на PostgreSQL)
+**Последнее обновление**: 08.03.2026 (PostgreSQL + Docker Compose)
 **Следующий review**: При добавлении новой функциональности

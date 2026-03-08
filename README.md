@@ -61,6 +61,8 @@ Using environment variables (while developing edit data/config.py)
 Note: If environment variables are set, they override any / all default values
 
 ## Running the application
+
+### Without Docker (Development)
 Terminal 1
 
     $ ngrok http 9999
@@ -80,6 +82,36 @@ Browser1
 Browser2
 
     http://some-random-url.ngrok.io
+
+### With Docker Compose (Recommended)
+Prerequisites: Docker and Docker Compose installed.
+
+1. Make sure PostgreSQL credentials in `docker-compose.yml` match your expectations:
+   - POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD
+   - SPW_PG_* environment variables in the `web` service
+
+2. Start all services:
+
+    $ docker-compose up -d
+
+3. Import test data:
+
+    $ docker-compose exec web python test/import_test_data.py
+
+4. Open browser:
+
+    http://localhost:8080
+
+5. Stop services:
+
+    $ docker-compose down
+
+Note: To persist PostgreSQL data, a Docker volume `postgres_data` is used.
+
+To view logs:
+
+    $ docker-compose logs -f web
+    $ docker-compose logs -f postgres
 
 ## Defaults
 ### Default admin credentials
