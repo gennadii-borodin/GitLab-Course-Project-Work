@@ -1,5 +1,7 @@
 def get_all_things(db):
-    rows = db.execute('SELECT * from things').fetchall()
+    cursor = db.cursor()
+    cursor.execute('SELECT * from things')
+    rows = cursor.fetchall()
     things = []
     if rows and len(rows) > 0:
         for row in rows:

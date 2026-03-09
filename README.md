@@ -7,8 +7,8 @@ This application is not very scalable nor data secure and thus should not be use
 The project uses 
 - **ngrok** as a way to publish the service (no actual dependency) (https://ngrok.com/)
 - **bottle** as web server / adapter (http://bottlepy.org/docs/dev/)
-- **sqlite3** as database (https://www.sqlite.org/index.html)
-- **SQLitePlugin** as database access method
+- **PostgreSQL** as database (https://www.postgresql.org/)
+- **psycopg2-binary** as PostgreSQL adapter
 - **vue.js 3** as frontend component framework (https://vuejs.org/)
 - **vue router 4** as SPA router (https://router.vuejs.org/guide/)
 - **bootstrap 5** as frontend styling system (https://getbootstrap.com/)
@@ -41,7 +41,15 @@ First register an Ngrok account and verify your email
 
 ## Configuration
 Using environment variables (while developing edit data/config.py)
-- Set database filename (SPW_DATABASE_FILENAME)
+
+### PostgreSQL settings
+- Set PostgreSQL host (SPW_PG_HOST)
+- Set PostgreSQL port (SPW_PG_PORT)
+- Set PostgreSQL user (SPW_PG_USER)
+- Set PostgreSQL password (SPW_PG_PASSWORD)
+- Set PostgreSQL database name (SPW_PG_DATABASE)
+
+### Other settings
 - Set migrations filename (SPW_MIGRATIONS_FILENAME)
 - Set data directory path (SPW_DATA_DIRECTORY)
 - Set static files directory path (SPW_STATIC_FILES_DIRECTORY)
@@ -50,9 +58,15 @@ Using environment variables (while developing edit data/config.py)
 - Set http port for the service (SPW_PORT)
 - Set session length / cookie TTL (SPW_SESSION_TTL)
 
+### Logging settings
+- Set log level (SPW_LOG_LEVEL): DEBUG, INFO, WARNING, ERROR, CRITICAL (default: INFO)
+- Set log file path (SPW_LOG_FILE): absolute path to log file (default: /app/logs/app.log)
+
 Note: If environment variables are set, they override any / all default values
 
 ## Running the application
+
+### Without Docker (Development)
 Terminal 1
 
     $ ngrok http 9999
@@ -72,6 +86,41 @@ Browser1
 Browser2
 
     http://some-random-url.ngrok.io
+
+### With Docker Compose (Recommended)
+Prerequisites: Docker and Docker Compose installed.
+
+1. Make sure PostgreSQL credentials in `docker-compose.yml` match your expectations:
+   - POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD
+   - SPW_PG_* environment variables in the `web` service
+
+2. Start all services:
+
+    $ docker-compose up -d
+
+3. Import test data:
+
+    $ docker-compose exec web python test/import_test_data.py
+
+4. Open browser:
+
+    http://localhost:8080
+
+5. Stop services:
+
+    $ docker-compose down
+
+Note: To persist PostgreSQL data, a Docker volume `postgres_data` is used.
+Note: To persist application logs, a Docker volume mount `./logs:/app/logs` is configured.
+
+To view logs:
+
+    $ docker-compose logs -f web
+    $ docker-compose logs -f postgres
+
+Or check the log file directly (persisted in ./logs directory):
+
+    $ tail -f logs/app.log
 
 ## Defaults
 ### Default admin credentials
