@@ -5,7 +5,7 @@ from requests.auth import HTTPBasicAuth
 
 @pytest.fixture(scope="session")
 def test_client():
-    base_url = os.getenv('TEST_BASE_URL', 'http://localhost:8080')
+    base_url = os.getenv('TEST_BASE_URL', 'http://localhost:80')
     session = requests.Session()
     yield session, base_url
     session.close()
