@@ -1,0 +1,36 @@
+FROM python:3.14-slim
+
+# Установка зависимостей для тестирования
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Установка дополнительных зависимостей для тестирования
+COPY tests/requirements-test.txt .
+RUN pip install --no-cache-dir -r tests/requirements-test.txt
+
+# Копирование исходного кода
+COPY . .
+
+# Создание директорий
+RUN mkdir -p /app/logs /app/data /app/static
+
+# Настройка переменных окружения для тестов
+ENV SPW_PG_HOST=postgres
+ENV SPW_PG_PORT=5432
+ENV SPW_PG_USER=test_user
+ENV SPW_PG_PASSWORD=test_password
+ENV SPW_PG_DATABASE=test_db
+ENV SPW_MIGRATIONS_FILENAME=migrations.json
+ENV SPW_DATA_DIRECTORY=/app/data
+ENV SPW_STATIC_FILES_DIRECTORY=/app/static
+ENV SPW_COOKIE_SECRET=test-cookie-secret
+ENV SPW_PASSWORD_SECRET=test-password-secret
+ENV SPW_PORT=8080
+ENV SPW_SESSION_TTL=10
+
+# Настройка health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 CMD curl -f http://localhost:8080/ || exit 1
+
+# Запуск приложения
+CMD ["python3", "main.py"]
