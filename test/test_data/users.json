@@ -1,8 +1,0 @@
-[
-  {
-    "firstname": "Admin",
-    "lastname": "Administrator",
-    "is_admin": 1,
-    "created_at": "CURRENT_TIMESTAMP"
-  }
-]
