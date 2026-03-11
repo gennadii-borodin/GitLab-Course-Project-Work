@@ -14,4 +14,4 @@ RUN apt-get update && apt-get install -y libpq-dev gcc wget openjdk-21-jre-headl
 
 COPY . .
 
-CMD ["sh", "-c", "pytest -v --cov=api --cov-report=term-missing --alluredir=allure-results; allure generate allure-results -o allure-report --clean || true"]
+CMD ["sh", "-c", "pytest -v --cov=api --cov-report=term-missing --cov-report=html:coverage-report --alluredir=allure-results; allure generate allure-results -o allure-report --clean || true"]

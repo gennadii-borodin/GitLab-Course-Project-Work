@@ -64,6 +64,50 @@ Using environment variables (while developing edit data/config.py)
 
 Note: If environment variables are set, they override any / all default values
 
+## Testing
+
+The project includes automated tests for API endpoints. Tests use pytest with coverage reporting and Allure for advanced reporting.
+
+### Running tests
+
+1. Make sure the application is running (see "With Docker Compose" above)
+
+2. Run the test script:
+
+    $ ./tests/run_tests.sh
+
+This will:
+- Start the application infrastructure (if not running)
+- Build the test container
+- Run tests with coverage reporting
+- Generate Allure report
+- Generate HTML coverage report
+- Stop the infrastructure
+
+### Test reports
+
+After running tests, you'll find:
+- **Allure report**: Detailed test execution report with screenshots and steps
+  - Location: `allure-report/index.html`
+- **HTML coverage report**: Test coverage analysis for the API code
+  - Location: `coverage-report/index.html`
+- **Text coverage report**: Coverage summary in the console output
+
+### Test coverage
+
+The project measures coverage for:
+- API endpoints in `api/` directory
+- All code paths including success and error cases
+
+### Testing tools
+
+- **pytest**: Test framework
+- **pytest-cov**: Coverage measurement
+- **pytest-asyncio**: Async test support
+- **requests**: HTTP client for API testing
+- **pytest-mock**: Mocking utilities
+- **allure-pytest**: Allure reporting
+
 ## Running the application
 
 ### Without Docker (Development)
@@ -138,4 +182,4 @@ There are still thing to do:
 - userroles and permissions in the cookie?
   - maybe use a local session storage for the access token
   - wrap axios into a wrapper that reads the local session storage
-- Google OAuth [frontend](https://developers.google.com/identity/sign-in/web/sign-in) [backend](https://developers.google.com/identity/sign-in/web/backend-auth) 
+- Google OAuth [frontend](https://developers.google.com/identity/sign-in/web/sign-in) [backend](https://developers.google.com/identity/sign-in/web/backend-auth)

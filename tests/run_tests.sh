@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Создание директорий для результатов Allure
-mkdir -p allure-results allure-report
+# Создание директорий для результатов Allure и отчета о покрытии
+mkdir -p allure-results allure-report coverage-report
 
 echo "Запуск инфраструктуры через docker-compose..."
 docker-compose up -d
@@ -26,12 +26,14 @@ docker run \
   --network app-network \
   -v "$(pwd)/allure-results:/app/allure-results" \
   -v "$(pwd)/allure-report:/app/allure-report" \
+  -v "$(pwd)/coverage-report:/app/coverage-report" \
   -e TEST_BASE_URL=http://web:80 \
   api-tests
 
 echo "Тесты завершены"
 echo "Allure отчёт сгенерирован в: allure-report/index.html"
-echo "Для просмотра откройте файл allure-report/index.html в браузере"
+echo "HTML отчёт о тестовом покрытии сгенерирован в: coverage-report/index.html"
+echo "Для просмотра откройте соответствующие файлы в браузере"
 
 echo "Остановка инфраструктуры..."
 docker-compose down
