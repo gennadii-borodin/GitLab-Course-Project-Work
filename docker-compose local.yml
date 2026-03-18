@@ -1,0 +1,62 @@
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: 
+      POSTGRES_PASSWORD: 
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  web:
+    build: .
+    container_name: webapp
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+    environment:
+      SPW_PG_HOST: 
+      SPW_PG_PORT: 
+      SPW_PG_DATABASE: 
+      SPW_PG_USER: 
+      SPW_PG_PASSWORD: 
+      SPW_MIGRATIONS_FILENAME: 
+      SPW_DATA_DIRECTORY: 
+      SPW_STATIC_FILES_DIRECTORY: 
+      SPW_COOKIE_SECRET: 
+      SPW_PASSWORD_SECRET: 
+      SPW_PORT: 
+      SPW_SESSION_TTL:
+    volumes:
+      - ./data:/app/data
+      - ./static:/app/static
+      - ./logs:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
