@@ -150,15 +150,15 @@ testing:
       alias: web-test
       
   script:
-    - echo "Ожидание готовности PostgreSQL..."
+    - echo "Wait PostgreSQL is ready..."
     - until pg_isready -h postgres -U test_user -d test_db; do sleep 2; done
     - echo "PostgreSQL готов"
-    - echo "Ожидание готовности веб-приложения..."
+    - echo "Wait Web app is ready..."
     - until curl -f $TEST_BASE_URL/ 2>/dev/null; do sleep 2; done
-    - echo "Веб-приложение готово"
-    - echo "Установка зависимостей для тестов..."
+    - echo "Web App is up and running"
+    - echo "Setup test dependencies..."
     - pip install --cache-dir $PIP_CACHE_DIR -r tests/requirements-test.txt
-    - echo "Запуск тестов..."
+    - echo "Start testing..."
     - pytest --tb=short --no-summary --no-header  --alluredir=allure-results --cov=api --cov=datastore --cov-report=html:coverage-report --cov-report=term-missing --junitxml=junit.xml
   artifacts:
     when: always                    
@@ -182,7 +182,7 @@ generate_and_publish_report:
   image: frankescobar/allure-docker-service:latest
   script:
     - allure generate allure-results -o allure-report --clean
-    - echo "Публикация Allure отчета на Pages..."
+    - echo "Publish reports on GitLab Pages..."
     - mkdir -p public
     - cp -r allure-report/* public/ 
     - ls -la public/
@@ -193,7 +193,7 @@ generate_and_publish_report:
     expire_in: 1 week
     name: "allure-pages-${CI_COMMIT_SHORT_SHA}"
     when: always
-  pages: true # pages does note work in Ya cloud
+  pages: true # pages does not work in Ya cloud
   
   tags:
     - course_runner
