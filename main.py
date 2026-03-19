@@ -1,8 +1,8 @@
 import os
+import time
+from psycopg2 import OperationalError
 from data.config import Config
 
-# Initialize config FIRST before any other imports that might use logger
-Config()
 
 from bottle import Bottle, run
 from datastore.store import Store
@@ -10,16 +10,38 @@ from utils.logger import setup_logger, get_logger
 from api.db_plugin import DatabasePlugin
 from api import login, things, user, static as static_routes, errors
 
+# Initialize config FIRST before any other imports that might use logger
+Config()
+
+
+
 # Now setup logger with the initialized config
 setup_logger()
 logger = get_logger(__name__)
 
+
+def wait_for_db(max_retries=30, delay=2):
+    from datastore.connection import Connection
+    for attempt in range(max_retries):
+        try:
+            with Connection(Config.config) as conn:
+                conn.cursor().execute("SELECT 1")
+            logger.info(f"Успешное подключение к БД на попытке {attempt + 1}")
+            return
+        except OperationalError, AttributeError:
+            if attempt == max_retries - 1:
+                raise
+            logger.info(f"Попытка {attempt + 1} не удалась, повтор через {delay} секунд...")
+            time.sleep(delay)
+
 if __name__ == '__main__':
     logger.info("Starting up application...")
     logger.info(f"Configuration: PG_HOST={Config.config.pg_host}, PG_PORT={Config.config.pg_port}, PG_DATABASE={Config.config.pg_database}")
-
+    logger.info(f"Configuration: PG_HOST={Config.config.port}, PG_PORT={Config.config},")
+# Wait for database to be ready before migrations
+    wait_for_db()
+    logger.info("Database is ready, starting migrations...")
     Store.migrate_db(Config.config)
-
     # Create Bottle app and install database plugin
     app = Bottle()
     app.install(DatabasePlugin(Config.config))

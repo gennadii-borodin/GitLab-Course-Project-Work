@@ -1,137 +1,260 @@
 stages:
+  - package
   - static-analysis
-  - test-setup
-  - testing
+  - test
   - deploy-manual
 
+.python-base:
+  image: 
+    name: python:3.14-slim
+    pull_policy: if-not-present
+  before_script:
+    - mkdir -p .cache/pip
+    - apt-get update && apt-get install -y --no-install-recommends postgresql-client jq curl
+    - apt-get clean && rm -rf /var/lib/apt/lists/*
+
+.dind-image:
+  image:
+    name: docker:${DOCKER_VERSION}-cli
+    pull_policy: if-not-present
+  
+  tags:
+      - course_runner
+  services:
+      - docker:${DOCKER_VERSION}-dind
+
+  before_script:
+
+    #Docker login
+    - |
+      if [ -n "$CI_REGISTRY_USER" ] && [ -n "$CI_REGISTRY_PASSWORD" ]; then
+        echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+      fi
+
 variables:
+  WEB_IMAGE_NAME: $CI_REGISTRY_IMAGE/$WEB_APP_NAME
   DOCKER_DRIVER: overlay2
-  DOCKER_TLS_CERTDIR: "/certs"
-  DOCKER_TLS_VERIFY: 1
-  DOCKER_HOST: "tcp://docker:2376"
-  DOCKER_CERT_PATH: "/certs/client"
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_HOST: "tcp://docker:2375"
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  DOCKER_VERSION: "29.3"
 
 cache:
   paths:
     - .cache/pip
   key: ${CI_COMMIT_REF_SLUG}
 
-static-analysis:
+static-security-analysis:
   stage: static-analysis
-  image: python:3.14-slim
+  extends: .python-base
   tags:
-    - course-runner
-  script:
-    - pip install ruff bandit
-    - ruff check .
-    - bandit -r .
+    - course_runner
+  script:    
+    - pip install bandit
+
+    - echo ===== start Bandit =====
+    - bandit -r . -f json -o bandit-report.json || true
+    - export BANDIT_ISSUES_COUNT=$(jq '.results | length' bandit-report.json)
+    - echo "Найдено уязвимостей - $BANDIT_ISSUES_COUNT"
+    - if [ "$BANDIT_ISSUES_COUNT" -gt "0" ]; then exit 1; fi
+  artifacts:
+    paths:
+      - bandit-report.json
+    expire_in: 1 week
+  allow_failure: true
+
+static-code-analysis:
+  stage: static-analysis
+  extends: .python-base
+  tags:
+    - course_runner
+  script:  
+  - pip install ruff
+  - echo ===== start Ruff check =====
+  - ruff check . --output-format gitlab -o ruff-report.json || true
+  - export RUFF_ISSUES_COUNT=$(jq 'length' ruff-report.json)
+  - echo "Найдено проблем - $RUFF_ISSUES_COUNT"
+  - export ERROR_COUNT=$(jq '[.[] | select(.severity == "major")] | length' ruff-report.json)
+  - echo "Errors - $ERROR_COUNT"
+  - if [ "$ERROR_COUNT" -gt "0" ]; then exit 1; fi
+
   artifacts:
     reports:
-      codequality: gl-code-quality-report.json
+      codequality: ruff-report.json
     paths:
-      - gl-code-quality-report.json
+      - ruff-report.json
     expire_in: 1 week
+  allow_failure: true
 
-test-setup:
-  stage: test-setup
-  services:
-    - postgres:17-alpine
+package:
+  stage: package
+  extends: .dind-image
+
+  script:
+      - docker pull $WEB_IMAGE_NAME:cache-latest || true
+      - docker pull $WEB_IMAGE_NAME:latest || true
+    
+    # Build image
+      - |
+        docker build \
+          --cache-from $WEB_IMAGE_NAME:cache-latest \
+          --cache-from $WEB_IMAGE_NAME:latest \
+          --build-arg BUILDKIT_INLINE_CACHE=1 \
+          -t $WEB_IMAGE_NAME:$CI_COMMIT_SHORT_SHA \
+          -t $WEB_IMAGE_NAME:latest \
+          -f Dockerfile \
+            .
+
+      - echo " ==== Push images ===="
+      - docker push $WEB_IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+      - docker push $WEB_IMAGE_NAME:latest
+      
+      - echo " ==== Update image fro stable branch ===="
+      - |
+        if [[ "$CI_COMMIT_BRANCH" == "main" ]]; then
+          docker tag $WEB_IMAGE_NAME:latest $WEB_IMAGE_NAME:cache-latest
+          docker push $WEB_IMAGE_NAME:cache-latest
+          echo "Updated cache-latest for main branch"
+        fi
+  rules:
+      - if: $CI_COMMIT_BRANCH || $CI_COMMIT_TAG
+
+testing:
+  extends: .python-base
+  stage: test
+  needs: ["package"]
   variables:
+  # Hardcoded values for testing stage. The reason not to manage separate set of variables for test env
     POSTGRES_DB: test_db
     POSTGRES_USER: test_user
     POSTGRES_PASSWORD: test_password
-    POSTGRES_HOST: postgres
-    POSTGRES_PORT: 5432
+    SPW_PORT: 80
+    SPW_PG_HOST: postgres
+    SPW_PG_PORT: 5432
+    SPW_PG_USER: test_user
+    SPW_PG_PASSWORD: test_password
+    SPW_PG_DATABASE: test_db
+    SPW_MIGRATIONS_FILENAME: migrations.json
+    SPW_DATA_DIRECTORY: /app/data
+    SPW_STATIC_FILES_DIRECTORY: /app/static
+    SPW_COOKIE_SECRET: some-secret-value
+    SPW_PASSWORD_SECRET: some-other-secret-value
+    TEST_BASE_URL: http://web-test:$SPW_PORT
+  
+  services:
+    - name: postgres:17-alpine
+      pull_policy: if-not-present
+      alias: postgres
+    
+    - name: $WEB_IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+      alias: web-test
+      
   script:
     - echo "Ожидание готовности PostgreSQL..."
-    - while ! pg_isready -h postgres -U test_user -d test_db; do sleep 2; done
+    - until pg_isready -h postgres -U test_user -d test_db; do sleep 2; done
     - echo "PostgreSQL готов"
-    - echo "Применение миграций..."
-    - python3 -m datastore.store migrate
-    - echo "Загрузка тестовых данных..."
-    - python3 -m datastore.store import_test_data
-    - echo "Тестовый стенд развёрнут"
-  tags:
-    - course-runner
-
-testing:
-  stage: testing
-  image: docker:20.10
-  services:
-    - docker:20.10-dind
-  variables:
-    DOCKER_TLS_CERTDIR: "/certs"
-    DOCKER_HOST: "tcp://docker:2376"
-    DOCKER_CERT_PATH: "/certs/client"
-    DOCKER_TLS_VERIFY: 1
-  before_script:
-    - apk add --no-cache py3-pip
-    - pip install docker-compose
-  script:
-    - docker build -f Dockerfile.test -t web-test .
-    - docker run --network host --name web-test web-test &
-    - sleep 10
-    - docker ps
-    - docker logs web-test
-    - docker run --network host -v $(pwd)/allure-results:/app/allure-results -v $(pwd)/coverage-report:/app/coverage-report -e TEST_BASE_URL=http://localhost:8080 web-test pytest --alluredir=/app/allure-results --cov=api --cov=datastore --cov-report=html:/app/coverage-report --cov-report=term-missing
+    - echo "Ожидание готовности веб-приложения..."
+    - until curl -f $TEST_BASE_URL/ 2>/dev/null; do sleep 2; done
+    - echo "Веб-приложение готово"
+    - echo "Установка зависимостей для тестов..."
+    - pip install --cache-dir $PIP_CACHE_DIR -r tests/requirements-test.txt
+    - echo "Запуск тестов..."
+    - pytest --tb=short --no-summary --no-header  --alluredir=allure-results --cov=api --cov=datastore --cov-report=html:coverage-report --cov-report=term-missing --junitxml=junit.xml
   artifacts:
+    when: always                    
     reports:
-      junit: junit.xml
+      junit: junit.xml             
     paths:
-      - allure-results/
-      - coverage-report/
-      - junit.xml
+      - allure-results/            
+      - coverage-report/          
+      - app/logs/            
     expire_in: 1 week
+    name: "test-results-${CI_COMMIT_SHORT_SHA}" 
+
   tags:
-    - course-runner
+    - course_runner
+  allow_failure: true
+
+generate_and_publish_report:
+  stage: test
+  dependencies:
+    - testing
+  image: frankescobar/allure-docker-service:latest
+  script:
+    - allure generate allure-results -o allure-report --clean
+    - echo "Публикация Allure отчета на Pages..."
+    - mkdir -p public
+    - cp -r allure-report/* public/ 
+    - ls -la public/
+   
+  artifacts:
+    paths:
+      - public                     
+    expire_in: 1 week
+    name: "allure-pages-${CI_COMMIT_SHORT_SHA}"
+    when: always
+  pages: true # pages does note work in Ya cloud
+  
+  tags:
+    - course_runner
+
 
 deploy-manual:
   stage: deploy-manual
-  image: docker:20.10
-  services:
-    - docker:20.10-dind
-  variables:
-    DOCKER_TLS_CERTDIR: "/certs"
-    DOCKER_HOST: "tcp://docker:2376"
-    DOCKER_CERT_PATH: "/certs/client"
-    DOCKER_TLS_VERIFY: 1
-  before_script:
-    - apk add --no-cache py3-pip
-    - pip install docker-compose
-  script:
-    - docker-compose down
-    - docker-compose up -d
-    - echo "Приложение развёрнуто"
-  environment:
-    name: production
-    url: http://localhost
-    on_stop: stop_production
-  when: manual
-  allow_failure: false
-  tags:
-    - course-runner
+  image: 
+    name: ubuntu:24.04
+    pull_policy: if-not-present
 
-stop_production:
-  stage: deploy-manual
-  image: docker:20.10
-  services:
-    - docker:20.10-dind
-  variables:
-    DOCKER_TLS_CERTDIR: "/certs"
-    DOCKER_HOST: "tcp://docker:2376"
-    DOCKER_CERT_PATH: "/certs/client"
-    DOCKER_TLS_VERIFY: 1
   before_script:
-    - apk add --no-cache py3-pip
-    - pip install docker-compose
+    - apt-get update && apt-get install -y openssh-client rsync curl
+    - apt-get clean
+     
+     # SSH setup
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan $DEPLOY_HOST >> ~/.ssh/known_hosts
+    
+    
   script:
-    - docker-compose down
-    - echo "Приложение остановлено"
+    # push docker compose files to the tagret server
+    - ssh $SSH_USER@$DEPLOY_HOST "
+        cd $DEPLOY_PATH &&
+        echo 'WEB_IMAGE_NAME=$WEB_IMAGE_NAME' >> .env &&
+        echo 'IMAGE_TAG=$CI_COMMIT_SHORT_SHA' >> .env &&
+        echo 'POSTGRES_DB=$POSTGRES_DB' >> .env &&
+        echo 'POSTGRES_USER=$POSTGRES_USER' >> .env &&
+        echo 'POSTGRES_PASSWORD=$POSTGRES_PASSWORD' >> .env &&
+        echo 'SPW_PG_HOST=$SPW_PG_HOST' >> .env &&
+        echo 'SPW_PG_PORT=$SPW_PG_PORT' >> .env &&
+        echo 'SPW_PG_DATABASE=$SPW_PG_DATABASE' >> .env &&
+        echo 'SPW_PG_USER=$SPW_PG_USER' >> .env &&
+        echo 'SPW_PG_PASSWORD=$SPW_PG_PASSWORD' >> .env &&
+        echo 'SPW_MIGRATIONS_FILENAME=$SPW_MIGRATIONS_FILENAME' >> .env &&
+        echo 'SPW_DATA_DIRECTORY=$SPW_DATA_DIRECTORY' >> .env &&
+        echo 'SPW_STATIC_FILES_DIRECTORY=$SPW_STATIC_FILES_DIRECTORY' >> .env &&
+        echo 'SPW_COOKIE_SECRET=$SPW_COOKIE_SECRET' >> .env &&
+        echo 'SPW_PASSWORD_SECRET=$SPW_PASSWORD_SECRET' >> .env &&
+        echo 'SPW_PORT=$SPW_PORT' >> .env &&
+        echo 'SPW_SESSION_TTL=$SPW_SESSION_TTL' >> .env"
+
+    
+    - rsync -av --delete docker-compose.yml $SSH_USER@$DEPLOY_HOST:$DEPLOY_PATH/
+    
+    # up the application
+    - ssh $SSH_USER@$DEPLOY_HOST "
+        cd $DEPLOY_PATH &&
+        echo '$CI_REGISTRY_PASSWORD' | docker login -u '$CI_REGISTRY_USER' --password-stdin '$CI_REGISTRY' &&
+        docker compose pull &&
+        docker compose down &&
+        docker compose up -d &&
+        docker compose ps
+      "
   environment:
     name: production
-    action: stop
   when: manual
-  allow_failure: false
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
   tags:
-    - course-runner
+    - course_runner

@@ -12,9 +12,8 @@ services:
     container_name: postgres
     restart: unless-stopped
     environment:
-      - POSTGRES_DB
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
+      POSTGRES_DB: 
+      POSTGRES_PASSWORD: 
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -29,32 +28,35 @@ services:
       start_period: 30s
 
   web:
-    image: $WEB_IMAGE_NAME:$IMAGE_TAG
+    build: .
     container_name: webapp
     restart: unless-stopped
     ports:
-      - "$SPW_PORT:$SPW_PORT"
+      - "80:80"
     networks:
       - app-network
     environment:
-      - SPW_PG_HOST
-      - SPW_PG_PORT
-      - SPW_PG_DATABASE
-      - SPW_PG_USER
-      - SPW_PG_PASSWORD
-      - SPW_MIGRATIONS_FILENAME
-      - SPW_DATA_DIRECTORY
-      - SPW_STATIC_FILES_DIRECTORY
-      - SPW_COOKIE_SECRET
-      - SPW_PASSWORD_SECRET
-      - SPW_PORT
-      - SPW_SESSION_TTL
-   
+      SPW_PG_HOST: 
+      SPW_PG_PORT: 
+      SPW_PG_DATABASE: 
+      SPW_PG_USER: 
+      SPW_PG_PASSWORD: 
+      SPW_MIGRATIONS_FILENAME: 
+      SPW_DATA_DIRECTORY: 
+      SPW_STATIC_FILES_DIRECTORY: 
+      SPW_COOKIE_SECRET: 
+      SPW_PASSWORD_SECRET: 
+      SPW_PORT: 
+      SPW_SESSION_TTL:
+    volumes:
+      - ./data:/app/data
+      - ./static:/app/static
+      - ./logs:/app/logs
     depends_on:
       postgres:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "python3 -c 'import socket;s=socket.socket();s.settimeout(5);s.connect((\"localhost\",80));s.close();exit(0)'"]
+      test: ["CMD", "curl", "-f", "http://localhost/"]
       interval: 30s
       timeout: 10s
       retries: 3
